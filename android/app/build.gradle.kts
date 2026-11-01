@@ -33,12 +33,12 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.adilhanney.saber"
+        applicationId = "com.saberplus.universal"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion
-        targetSdk = flutter.targetSdkVersion
-        versionCode = flutter.versionCode
+        targetSdk = 35
+        versionCode = 200000
         versionName = flutter.versionName
     }
 
@@ -48,6 +48,9 @@ android {
             keyPassword = keystoreProperties["keyPassword"] as String
             storeFile = keystoreProperties["storeFile"]?.let { file(it) }
             storePassword = keystoreProperties["storePassword"] as String
+            enableV1Signing = true
+            enableV2Signing = true
+            enableV3Signing = true
         }
     }
     buildTypes {
@@ -60,7 +63,11 @@ android {
     }
 
     packaging {
-        jniLibs.pickFirsts.add("lib/*/libc++_shared.so")
+        jniLibs {
+            useLegacyPackaging = true
+            pickFirsts.add("lib/*/libc++_shared.so")
+            pickFirsts.add("lib/*/libirondash_engine_context_native.so")
+        }
     }
 }
 
